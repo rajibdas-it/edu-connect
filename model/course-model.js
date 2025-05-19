@@ -8,7 +8,7 @@ const courseSchema = new Schema({
     modules: { type: [Schema.ObjectId], required: false }, //property ta ekta array of string
     price: { type: Number, required: true },
     active: { type: Boolean, required: true },
-    category: { type: Schema.ObjectId, required: false },
+    category: { type: Schema.ObjectId, ref: "Category", required: false },
     instructor: { type: Schema.ObjectId, required: false },
     testimonials: { type: [Schema.ObjectId], required: false },
     quizSet: { type: Schema.ObjectId, required: false }
