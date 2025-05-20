@@ -9,7 +9,7 @@ const courseSchema = new Schema({
     price: { type: Number, required: true },
     active: { type: Boolean, required: true },
     category: { type: Schema.ObjectId, ref: "Category", required: false },
-    instructor: { type: Schema.ObjectId, required: false },
+    instructor: { type: Schema.ObjectId, ref: "User", required: false },
     testimonials: { type: [Schema.ObjectId], required: false },
     quizSet: { type: Schema.ObjectId, required: false }
 
