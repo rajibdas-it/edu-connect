@@ -22,6 +22,6 @@ export async function getCourseList() {
         }).populate({
             path: "modules",//course model er kon field hobe.
             model: Module
-        }).sort({ createdAt: -1 }).limit(5).lean()
+        }).sort({ createdAt: -1 }).lean()
     return replaceMongoIdInArray(courses)
 }

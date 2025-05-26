@@ -76,6 +76,21 @@ const FilterCourseMobile = () => {
     price: ["free"],
     sort: "",
   });
+  const applyArrayFilter = ({ type, value }) => {
+    const isFilterApplied = filter[type].includes(value);
+
+    if (isFilterApplied) {
+      setFilter((prev) => ({
+        ...prev,
+        [type]: prev[type].filter((v) => v !== value),
+      }));
+    } else {
+      setFilter((prev) => ({
+        ...prev,
+        [type]: [...prev[type], value],
+      }));
+    }
+  };
   return (
     <div className="lg:hidden">
       <Sheet>
