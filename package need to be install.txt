@@ -2,3 +2,5 @@ Install Tailwind Animate: npm i tailwindcss-animate
 Install ShadCN: npx shadcn@latest init
 #### ShadCN Component Needed
 npx shadcn@latest add button accordion avatar badge toast calendar card carousel checkbox command dialog dropdown-menu form input label popover progress select separator sheet table tabs textarea sonner
+
+45.28 min
