@@ -7,7 +7,7 @@ import { replaceMongoIdInArray } from "@/lib/convertData";
 
 const SingleCoursePage = async ({ params: { id } }) => {
   const course = await getCourseDetails(id);
-  console.log(course);
+  // console.log(course);
   return (
     <>
       <CourseDetailsIntro course={course} />

@@ -38,9 +38,15 @@ import { CourseProgress } from "@/components/course-progress";
 import { ArrowRight } from "lucide-react";
 import { formatPrice } from "@/lib/formatPrice";
 import { formatDat } from "@/lib/formatDate";
+import { getCourseDetailsByInstructor } from "@/queries/courses";
 
-const CourseInstructor = ({ course }) => {
+const CourseInstructor = async ({ course }) => {
   const instructor = course?.instructor;
+
+  const instuctorCourses = await getCourseDetailsByInstructor(
+    instructor._id.toString()
+  );
+  console.log(instuctorCourses.totalCourse);
   return (
     <div className="bg-gray-50 rounded-md p-8">
       <div className="md:flex md:gap-x-5 mb-8">
@@ -62,7 +68,7 @@ const CourseInstructor = ({ course }) => {
             <ul className="list space-y-4">
               <li className="flex items-center space-x-3">
                 <Presentation className="text-gray-600" />
-                <div>10+ Courses</div>
+                <div>{instuctorCourses.totalCourse} + Courses</div>
               </li>
               <li className="flex space-x-3">
                 <UsersRound className="text-gray-600" />

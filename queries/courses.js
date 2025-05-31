@@ -48,3 +48,12 @@ export async function getCourseDetails(id) {
         .lean()
     return replaceMongoIdInObject(course)
 }
+
+
+export async function getCourseDetailsByInstructor(insId) {
+    const courses = await Course.find({ instructor: insId }).lean()
+    return {
+        totalCourse: courses.length,
+
+    }
+}
