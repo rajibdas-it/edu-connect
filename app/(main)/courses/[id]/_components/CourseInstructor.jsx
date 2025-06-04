@@ -52,7 +52,7 @@ const CourseInstructor = async ({ course }) => {
       <div className="md:flex md:gap-x-5 mb-8">
         <div className="h-[310px] w-[270px] max-w-full  flex-none rounded mb-5 md:mb-0">
           <img
-            src={instructor.profilePicture}
+            src={`/assets/images/users/${instructor.profilePicture}`}
             alt=""
             className="w-full h-full object-cover rounded"
           />
