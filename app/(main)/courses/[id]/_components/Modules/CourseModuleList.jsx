@@ -38,43 +38,43 @@ import { CourseProgress } from "@/components/course-progress";
 import { ArrowRight } from "lucide-react";
 import { formatPrice } from "@/lib/formatPrice";
 import { formatDat } from "@/lib/formatDate";
-import CourseModuleList from "./Modules/CourseModuleList";
+import { getLesson } from "@/queries/lesson";
+import CourseLessonList from "./CourseLessonList";
 
-const CourseCurriculum = ({ course }) => {
-  console.log(course.modules);
-  const totalDuration = course.modules.reduce((current, obj) => {
-    return current + obj.duration;
-  }, 0);
+const CourseModuleList = ({ module }) => {
   return (
-    <>
-      <div class="flex gap-x-5 items-center justify-center flex-wrap mt-4 mb-6 text-gray-600 text-sm">
-        <span className="flex items-center gap-1.5">
-          <BookCheck className="w-4 h-4" />
-          {course.modules.length} Chapters
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Clock10 className="w-4 h-4" />
-          {(totalDuration / 60).toPrecision(2)}+ Hours
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Radio className="w-4 h-4" />4 Live Class
-        </span>
-      </div>
+    <AccordionItem className="border-none" value="item-1">
+      <AccordionTrigger>{module?.title}</AccordionTrigger>
+      <AccordionContent>
+        {/* header */}
+        {/* <div class="flex gap-x-5 items-center flex-wrap mt-4 mb-6 text-gray-600 text-sm">
+          <span className="flex items-center gap-1.5">
+            <Video className="w-4 h-4" />
+            12 Lessons
+          </span>
+          <span className="flex items-center gap-1.5">
+            <NotepadText className="w-4 h-4" />
+            10 Notes
+          </span>
+          <span className="flex items-center gap-1.5">
+            <FileQuestion className="w-4 h-4" />
+            10 Quiz
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Radio className="w-4 h-4" />1 Live Class
+          </span>
+        </div> */}
+        {/* header ends */}
 
-      {/* contents */}
-      <Accordion
-        defaultValue={["item-1", "item-2", "item-3"]}
-        type="multiple"
-        collapsible
-        className="w-full"
-      >
-        {course.modules &&
-          course.modules.map((module) => (
-            <CourseModuleList key={module._id} module={module} />
-          ))}
-      </Accordion>
-    </>
+        <div className="space-y-3">
+          {module.lessonIds &&
+            module.lessonIds.map((lessonId) => (
+              <CourseLessonList key={lessonId} lessonId={lessonId} />
+            ))}
+        </div>
+      </AccordionContent>
+    </AccordionItem>
   );
 };
 
-export default CourseCurriculum;
+export default CourseModuleList;

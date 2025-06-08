@@ -5,8 +5,8 @@ const enrollmentSchema = new Schema({
     status: { required: true, type: String },
     completion_date: { required: true, type: Date },
     method: { required: true, type: String },
-    course_id: { type: Schema.ObjectId, ref: "Course" },
-    user_id: { type: Schema.ObjectId, ref: "User" }
+    course: { type: Schema.ObjectId, ref: "Course" },
+    student: { type: Schema.ObjectId, ref: "User" }
 })
 
 

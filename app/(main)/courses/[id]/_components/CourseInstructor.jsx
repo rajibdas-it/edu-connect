@@ -46,15 +46,17 @@ const CourseInstructor = async ({ course }) => {
   const instuctorCourses = await getCourseDetailsByInstructor(
     instructor._id.toString()
   );
-  console.log(instuctorCourses.totalCourse);
+  console.log(instuctorCourses);
   return (
     <div className="bg-gray-50 rounded-md p-8">
       <div className="md:flex md:gap-x-5 mb-8">
         <div className="h-[310px] w-[270px] max-w-full  flex-none rounded mb-5 md:mb-0">
-          <img
+          <Image
             src={`/assets/images/users/${instructor.profilePicture}`}
             alt=""
             className="w-full h-full object-cover rounded"
+            height={100}
+            width={100}
           />
         </div>
         <div className="flex-1">
@@ -68,7 +70,7 @@ const CourseInstructor = async ({ course }) => {
             <ul className="list space-y-4">
               <li className="flex items-center space-x-3">
                 <Presentation className="text-gray-600" />
-                <div>{instuctorCourses.totalCourse} + Courses</div>
+                <div>{instuctorCourses.courses} + Courses</div>
               </li>
               <li className="flex space-x-3">
                 <UsersRound className="text-gray-600" />
