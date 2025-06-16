@@ -9,14 +9,14 @@ const { auth } = NextAuth(authConfig)
 export default auth((req) => {
     const { nextUrl } = req
     const isAuthenticate = !!req.auth
-    console.log("from middleware page:", isAuthenticate);
-    console.log(nextUrl.pathname);
+
 
     const isPublicRoute = (
         PUBLICS_ROUTES.find((route) => nextUrl.pathname.startsWith(route))
         || nextUrl.pathname === ROOT)
 
-
+    console.log("Current Path", nextUrl.pathname);
+    console.log("Public Route", isPublicRoute);
     if (!isAuthenticate && !isPublicRoute) {
         return Response.redirect(new URL(LOGIN, nextUrl))
     }
