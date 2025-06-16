@@ -17,7 +17,7 @@ export function MobileNav({ items, children }) {
   const [loginSession, setLoginSession] = useState(null);
 
   useEffect(() => {
-    console.log("test hold session on login state");
+    // console.log("test hold session on login state");
     setLoginSession(session);
   }, [session]);
 

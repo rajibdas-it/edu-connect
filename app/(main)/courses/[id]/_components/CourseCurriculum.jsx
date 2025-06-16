@@ -41,7 +41,7 @@ import { formatDat } from "@/lib/formatDate";
 import CourseModuleList from "./Modules/CourseModuleList";
 
 const CourseCurriculum = ({ course }) => {
-  console.log(course.modules);
+  // console.log(course.modules);
   const totalDuration = course.modules.reduce((current, obj) => {
     return current + obj.duration;
   }, 0);

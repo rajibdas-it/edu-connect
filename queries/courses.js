@@ -77,7 +77,7 @@ export async function getCourseDetailsByInstructor(instructorId) {
         return acc + obj.rating;
     }, 0)) / totalTestimonials.length;
 
-    console.log("testimonials", totalTestimonials, avgRating);
+    // console.log("testimonials", totalTestimonials, avgRating);
 
     return {
         "courses": courses.length,
