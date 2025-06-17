@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 import { doSocialLogin } from "@/app/actions";
+import Image from "next/image";
 
 const SocialLogins = () => {
   return (
