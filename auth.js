@@ -4,7 +4,48 @@ import GoogleProvider from "next-auth/providers/google"
 import { User } from "./model/user-model";
 import { authConfig } from "./auth.config";
 import bcrypt from 'bcryptjs'
+import { URLSearchParams } from "next/navigation";
 
+
+
+async function refreshAccessToken(token) {
+    try {
+        const url = 'https://oauth2.googleapis.com/token?' +
+            new URLSearchParams({
+                client_id: process.env.GOOGLE_CLIENT_ID,
+                client_secret: process.env.GOOGLE_CLIENT_SECRET,
+                grant_type: 'refresh_token',
+                refresh_token: token
+            })
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        const refreshedToken = await response.json()
+        if (!response.ok) {
+            throw refreshedToken
+        }
+
+        return {
+            ...token,
+            accessToken: refreshedToken?.access_token,
+            accessTokenExpires: Date.now() + refreshedToken?.expires_in * 1000,
+            refreshToken: refreshedToken?.refresh_token,
+        }
+
+    } catch (error) {
+
+        console.log(error);
+        return {
+            ...token,
+            error: "RefreshAccessTokenError"
+        }
+
+    }
+}
 
 export const {
     auth,
@@ -56,5 +97,47 @@ export const {
             }
 
         })
-    ]
+    ],
+    callbacks: {
+        async jwt({ token, user, account }) {
+
+            console.log(`JWT Token ${JSON.stringify(token)}`);
+            console.log(`JWT Account ${JSON.stringify(account)}`);
+            console.log(`User Details ${JSON.stringify(user)}`);
+
+            //jodi session e user thake taile eigula return korbe.
+            if (account && user) {
+                return {
+                    //ei khan theke ja return korbe shob token er moddhe pawa jabe
+                    accessToken: account?.access_token,
+                    accessTokenExpires: Date.now() + account?.expires_in * 1000,
+                    refreshToken: account?.refresh_token,
+                    user
+                }
+            }
+
+            //jodi token expire na hoy taile ei token tai bar bar dibe.
+            if (Date.now() < token?.accessTokenExpires) {
+                console.log(`${new Date(Date.now())} using old access token`);
+                return token
+            }
+
+            console.log(`Token Expired at ${new Date(Date.now())}`);
+            //jodi token expire hoy taile ekta function return korbe jeta new token dibe.
+            //function ta upor e likhe rakhbo
+            return refreshAccessToken(token)
+
+        },
+
+        async session({ session, token }) {
+            //ei token ta automatic jwt pass kore dey. ei token er vitorei shob ase error soho
+            session.user = token?.user
+            session.accessToken = token?.accessToken
+            session.error = token?.error
+            console.log(`Session Details`, session);
+
+            return session
+
+        }
+    }
 })
