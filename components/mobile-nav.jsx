@@ -16,6 +16,10 @@ export function MobileNav({ items, children }) {
   const { data: session } = useSession();
   const [loginSession, setLoginSession] = useState(null);
 
+  if (session.error === "RefreshAccessTokenError") {
+    redirect("/login");
+  }
+
   useEffect(() => {
     // console.log("test hold session on login state");
     setLoginSession(session);
